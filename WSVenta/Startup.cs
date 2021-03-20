@@ -42,7 +42,12 @@ namespace WSVenta
                                       builder.WithMethods("*");
                                   });
             });
-            services.AddControllers();
+            services.AddControllers()
+                .AddJsonOptions(options=>
+                {
+                    options.JsonSerializerOptions.Converters.Add(new ConvertDecimalToString());
+                    options.JsonSerializerOptions.Converters.Add(new ConvertIntToString());
+                });
 
             #region JWT
             var appSettingsSection = Configuration.GetSection("AppSettings");
